@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="balls" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/balls" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/balls" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add directory="C:/Program Files/Microsoft DirectX SDK (June 2010)/Include" />
+		</Compiler>
+		<Linker>
+			<Add library="C:\Program Files\Microsoft DirectX SDK (June 2010)\Lib\x86\d3d9.lib" />
+			<Add library="C:\Program Files\Microsoft DirectX SDK (June 2010)\Lib\x86\d3dx9.lib" />
+			<Add directory="C:/Program Files/Microsoft DirectX SDK (June 2010)/Lib/x86" />
+		</Linker>
+		<Unit filename="app.cpp" />
+		<Unit filename="app.h" />
+		<Unit filename="engine.cpp" />
+		<Unit filename="engine.h" />
+		<Unit filename="game.cpp" />
+		<Unit filename="game.h" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

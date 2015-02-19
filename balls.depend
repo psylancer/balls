@@ -1,0 +1,83 @@
+# depslib dependency file v1.0
+1424328468 source:d:\sources\balls\app.cpp
+	"app.h"
+
+1424263632 d:\sources\balls\app.h
+	"windows.h"
+	"tchar.h"
+	"engine.h"
+
+1424265769 d:\sources\balls\engine.h
+	"d3d9.h"
+	"d3dx9.h"
+	"tchar.h"
+	"time.h"
+	"game.h"
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3d9.h
+	<stdlib.h>
+	<objbase.h>
+	<windows.h>
+	"d3d9types.h"
+	"d3d9caps.h"
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3d9types.h
+	<float.h>
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3d9caps.h
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3dx9.h
+	<limits.h>
+	"d3d9.h"
+	"d3dx9math.h"
+	"d3dx9core.h"
+	"d3dx9xof.h"
+	"d3dx9mesh.h"
+	"d3dx9shader.h"
+	"d3dx9effect.h"
+	"d3dx9tex.h"
+	"d3dx9shape.h"
+	"d3dx9anim.h"
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3dx9math.h
+	"d3dx9.h"
+	<math.h>
+	"d3dx9math.inl"
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3dx9math.inl
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3dx9core.h
+	"d3dx9.h"
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3dx9xof.h
+	"d3dx9.h"
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3dx9mesh.h
+	"d3dx9.h"
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3dx9shader.h
+	"d3dx9.h"
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3dx9effect.h
+	"d3dx9.h"
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3dx9tex.h
+	"d3dx9.h"
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3dx9shape.h
+	"d3dx9.h"
+
+1274308617 c:\program files\microsoft directx sdk (june 2010)\include\d3dx9anim.h
+
+1424328046 d:\sources\balls\game.h
+	"d3d9.h"
+
+1424328591 source:d:\sources\balls\engine.cpp
+	"engine.h"
+
+1424267728 source:d:\sources\balls\game.cpp
+	"game.h"
+
+1424270032 source:d:\sources\balls\main.cpp
+	"app.h"
+

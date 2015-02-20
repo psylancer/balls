@@ -21,5 +21,7 @@ private:
 public:
     TApplication(HINSTANCE hInstance, INT cmdShow);
     ~TApplication();
+    TEngine* GetEngine();
+    TGame* GetGame();
     INT MainLoop();
 };

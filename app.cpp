@@ -1,4 +1,9 @@
-﻿#include "app.h"
+﻿
+#include "app.h"
+#include <tchar.h>
+
+#define WINDOW_CLASSNAME _T("BallsApp")
+#define WINDOW_TITLE _T("Balls")
 
 void TApplication::RegWindow()
 {
@@ -203,10 +208,12 @@ TApplication::~TApplication()
     {
         delete engine;
     }
+    engine = NULL;
     if(game!=NULL)
     {
         delete game;
     }
+    game = NULL;
 }
 
 TEngine* TApplication::GetEngine()
@@ -222,8 +229,7 @@ TGame* TApplication::GetGame()
 INT TApplication::MainLoop()
 {
     MSG msg;
-    ZeroMemory(&msg,sizeof(MSG));
-    while(msg.message!=WM_QUIT)
+    do
     {
         if(PeekMessage(&msg,NULL,0,0,PM_REMOVE))
         {
@@ -236,6 +242,6 @@ INT TApplication::MainLoop()
             ProcessGame();
             engine->Render();
         }
-    }
+    } while(msg.message!=WM_QUIT);
     return (INT)msg.wParam;
 }

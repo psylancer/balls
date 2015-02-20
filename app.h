@@ -1,9 +1,9 @@
-#include "windows.h"
-#include "tchar.h"
-#include "engine.h"
 
-#define WINDOW_CLASSNAME _T("BallsApp")
-#define WINDOW_TITLE _T("Balls")
+#ifndef _APP_H_
+#define _APP_H_
+
+#include "engine.h"
+#include <windows.h>
 
 class TApplication {
 private:
@@ -25,3 +25,5 @@ public:
     TGame* GetGame();
     INT MainLoop();
 };
+
+#endif

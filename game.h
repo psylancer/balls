@@ -1,4 +1,8 @@
-#include "d3d9.h"
+
+#ifndef _GAME_H_
+#define _GAME_H_
+
+#include <d3d9.h>
 
 #define FIELD_SIZE 8
 #define HALF_FIELD_SIZE FIELD_SIZE/2
@@ -50,3 +54,5 @@ public:
     LONG GetScore();
     BOOL IsGameOver();
 };
+
+#endif

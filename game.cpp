@@ -1,4 +1,5 @@
-﻿#include "game.h"
+﻿
+#include "game.h"
 
 D3DCOLORVALUE GetColorByIndex(WORD idx)
 {

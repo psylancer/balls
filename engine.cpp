@@ -1,4 +1,7 @@
-﻿#include "engine.h"
+﻿
+#include "engine.h"
+#include <tchar.h>
+
 #define __DIE__(msg) MessageBox(NULL,msg,_T("Error"),0); \
                        PostQuitMessage(0);
 
@@ -511,7 +514,7 @@ void TEngine::InitGeometry()
     TAtom *atom=cellGeometry->GetAtom(0);
     atom->Init(20,30,10,D3DPT_TRIANGLELIST);
     TVertex *vertices;
-    FLOAT tmp=1/sqrt(2);
+    FLOAT tmp=1/sqrt(2.0);
     vertices=new TVertex[20];
     ZeroMemory(vertices,20*sizeof(TVertex));
     vertices[0].x=0.0f; vertices[0].y=-CELL_BIAS; vertices[0].z=0.0f;

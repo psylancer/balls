@@ -1,4 +1,4 @@
-#include "app.h"
+п»ї#include "app.h"
 
 void TApplication::RegWindow()
 {
@@ -51,26 +51,26 @@ LRESULT CALLBACK TApplication::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
             }
             BOOL IsCell;
             WORD id=app->GetEngine()->OnClick(LOWORD(lParam),HIWORD(lParam),&IsCell);
-            //проверяем, действительно ли кликнули по объекту
+            //РїСЂРѕРІРµСЂСЏРµРј, РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ Р»Рё РєР»РёРєРЅСѓР»Рё РїРѕ РѕР±СЉРµРєС‚Сѓ
             if(id<TOTAL_COUNT)
             {
-                //клик по ячейке? (engine при этом гарантирует, что какой-то шар уже был выбран)
+                //РєР»РёРє РїРѕ СЏС‡РµР№РєРµ? (engine РїСЂРё СЌС‚РѕРј РіР°СЂР°РЅС‚РёСЂСѓРµС‚, С‡С‚Рѕ РєР°РєРѕР№-С‚Рѕ С€Р°СЂ СѓР¶Рµ Р±С‹Р» РІС‹Р±СЂР°РЅ)
                 if(IsCell)
                 {
-                    //пробуем переместить
+                    //РїСЂРѕР±СѓРµРј РїРµСЂРµРјРµСЃС‚РёС‚СЊ
                     if(app->GetGame()->TryMove(id))
                     {
-                        //получилось переместить
+                        //РїРѕР»СѓС‡РёР»РѕСЃСЊ РїРµСЂРµРјРµСЃС‚РёС‚СЊ
                         WORD *path,
                              pathLen=app->GetGame()->GetLastMovePath(&path);
                         app->GetEngine()->MoveBall(path,pathLen);
                         app->moveStarted=TRUE;
-                        //а потом ждем до окончания анимации
+                        //Р° РїРѕС‚РѕРј Р¶РґРµРј РґРѕ РѕРєРѕРЅС‡Р°РЅРёСЏ Р°РЅРёРјР°С†РёРё
                     }
                 }
                 else
                 {
-                    //просто выбираем шар
+                    //РїСЂРѕСЃС‚Рѕ РІС‹Р±РёСЂР°РµРј С€Р°СЂ
                     app->GetGame()->Select(id);
                 }
             }
@@ -80,7 +80,7 @@ LRESULT CALLBACK TApplication::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
         {
             if(wParam==VK_SPACE)
             {
-                //новая игра
+                //РЅРѕРІР°СЏ РёРіСЂР°
                 app->GetEngine()->OnResetGame();
                 app->GetGame()->New();
                 TBallInfo *info;
@@ -90,7 +90,7 @@ LRESULT CALLBACK TApplication::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
             }
             else if(wParam==VK_ESCAPE)
             {
-                //выход
+                //РІС‹С…РѕРґ
                 PostQuitMessage(0);
             }
             return 0;
@@ -116,14 +116,14 @@ void TApplication::ProcessGame()
 {
     if(moveStarted)
     {
-        //ждем до окончания анимации перемещения
+        //Р¶РґРµРј РґРѕ РѕРєРѕРЅС‡Р°РЅРёСЏ Р°РЅРёРјР°С†РёРё РїРµСЂРµРјРµС‰РµРЅРёСЏ
         if(!engine->IsMoving())
         {
-            //перемещение окончено - тестируем на взрыв
+            //РїРµСЂРµРјРµС‰РµРЅРёРµ РѕРєРѕРЅС‡РµРЅРѕ - С‚РµСЃС‚РёСЂСѓРµРј РЅР° РІР·СЂС‹РІ
             moveStarted=FALSE;
             if(game->DetonateTest())
             {
-                //инициируем взрыв и увеличиваем очки
+                //РёРЅРёС†РёРёСЂСѓРµРј РІР·СЂС‹РІ Рё СѓРІРµР»РёС‡РёРІР°РµРј РѕС‡РєРё
                 WORD *detonateList,
                 count=game->GetDetonateList(&detonateList);
                 detonateStarted=TRUE;
@@ -132,7 +132,7 @@ void TApplication::ProcessGame()
             }
             else
             {
-                //иначе пытаемся добавить шары
+                //РёРЅР°С‡Рµ РїС‹С‚Р°РµРјСЃСЏ РґРѕР±Р°РІРёС‚СЊ С€Р°СЂС‹
                 if(game->CreateBalls(APPEAR_COUNT))
                 {
                     TBallInfo *appearList;
@@ -149,14 +149,14 @@ void TApplication::ProcessGame()
     }
     if(appearStarted)
     {
-        //ждем до окончания анимации появления
+        //Р¶РґРµРј РґРѕ РѕРєРѕРЅС‡Р°РЅРёСЏ Р°РЅРёРјР°С†РёРё РїРѕСЏРІР»РµРЅРёСЏ
         if(!engine->IsAppearing())
         {
             appearStarted=FALSE;
-            //появление окончено - тестируем на взрыв на всякий случай
+            //РїРѕСЏРІР»РµРЅРёРµ РѕРєРѕРЅС‡РµРЅРѕ - С‚РµСЃС‚РёСЂСѓРµРј РЅР° РІР·СЂС‹РІ РЅР° РІСЃСЏРєРёР№ СЃР»СѓС‡Р°Р№
             if(game->DetonateTest())
             {
-                //инициируем взрыв и увеличиваем очки
+                //РёРЅРёС†РёРёСЂСѓРµРј РІР·СЂС‹РІ Рё СѓРІРµР»РёС‡РёРІР°РµРј РѕС‡РєРё
                 WORD *detonateList,
                 count=game->GetDetonateList(&detonateList);
                 detonateStarted=TRUE;
@@ -167,10 +167,10 @@ void TApplication::ProcessGame()
     }
     if(detonateStarted)
     {
-        //ждем до окончания анимации взрыва
+        //Р¶РґРµРј РґРѕ РѕРєРѕРЅС‡Р°РЅРёСЏ Р°РЅРёРјР°С†РёРё РІР·СЂС‹РІР°
         if(!engine->IsDetonating())
         {
-            //просто сбрасываем флаг
+            //РїСЂРѕСЃС‚Рѕ СЃР±СЂР°СЃС‹РІР°РµРј С„Р»Р°Рі
             detonateStarted=FALSE;
         }
     }
@@ -185,9 +185,9 @@ TApplication::TApplication(HINSTANCE hInstance, INT cmdShow)
     moveStarted=FALSE;
     appearStarted=FALSE;
     detonateStarted=FALSE;
-    hWindow=CreateWindow(WINDOW_CLASSNAME,WINDOW_TITLE,WS_POPUP,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,NULL,NULL,hInstance,0);
-    //это для хранения указателя на объект app прямо в структуре описания окна,
-    //чтобы можно было обращаться из статического метода MsgProc
+    hWindow=CreateWindow(WINDOW_CLASSNAME,WINDOW_TITLE,WS_OVERLAPPEDWINDOW,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,NULL,NULL,hInstance,0);
+    //СЌС‚Рѕ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СѓРєР°Р·Р°С‚РµР»СЏ РЅР° РѕР±СЉРµРєС‚ app РїСЂСЏРјРѕ РІ СЃС‚СЂСѓРєС‚СѓСЂРµ РѕРїРёСЃР°РЅРёСЏ РѕРєРЅР°,
+    //С‡С‚РѕР±С‹ РјРѕР¶РЅРѕ Р±С‹Р»Рѕ РѕР±СЂР°С‰Р°С‚СЊСЃСЏ РёР· СЃС‚Р°С‚РёС‡РµСЃРєРѕРіРѕ РјРµС‚РѕРґР° MsgProc
     SetWindowLongPtr(hWindow,GWLP_USERDATA,(LONG_PTR)this);
     engine=new TEngine(hWindow);
     game=new TGame();
@@ -232,7 +232,7 @@ INT TApplication::MainLoop()
         }
         else
         {
-            //если нет сообщений, то обрабатываем состояние игры и занимаемся рендерингом
+            //РµСЃР»Рё РЅРµС‚ СЃРѕРѕР±С‰РµРЅРёР№, С‚Рѕ РѕР±СЂР°Р±Р°С‚С‹РІР°РµРј СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹ Рё Р·Р°РЅРёРјР°РµРјСЃСЏ СЂРµРЅРґРµСЂРёРЅРіРѕРј
             ProcessGame();
             engine->Render();
         }

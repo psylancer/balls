@@ -1,8 +1,8 @@
-#include "game.h"
+п»ї#include "game.h"
 
 D3DCOLORVALUE GetColorByIndex(WORD idx)
 {
-    //по индексу можно получить значение цвета для Direct3D
+    //РїРѕ РёРЅРґРµРєСЃСѓ РјРѕР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ Р·РЅР°С‡РµРЅРёРµ С†РІРµС‚Р° РґР»СЏ Direct3D
     D3DCOLORVALUE mat;
     ZeroMemory(&mat,sizeof(D3DCOLORVALUE));
     mat.a=1.0f;
@@ -20,7 +20,7 @@ D3DCOLORVALUE GetColorByIndex(WORD idx)
 
 void TGame::ClearField()
 {
-    //очистка всех ячеек
+    //РѕС‡РёСЃС‚РєР° РІСЃРµС… СЏС‡РµРµРє
     ZeroMemory(cells,TOTAL_COUNT*sizeof(TCell));
     for(WORD i=0;i<TOTAL_COUNT;i++)
     {
@@ -30,7 +30,7 @@ void TGame::ClearField()
 
 WORD TGame::GetSelected()
 {
-    //получение номера выбранного шара
+    //РїРѕР»СѓС‡РµРЅРёРµ РЅРѕРјРµСЂР° РІС‹Р±СЂР°РЅРЅРѕРіРѕ С€Р°СЂР°
     for(WORD i=0;i<TOTAL_COUNT;i++)
     {
         if(cells[i].selected)
@@ -43,8 +43,8 @@ WORD TGame::GetSelected()
 
 WORD TGame::GetNeighbours(WORD cellId, WORD *pNeighbours)
 {
-    //функция определяет соседние ячейки для заданной - их может быть от 2 до 4
-    //в зависимости от того, где находится данная ячейка
+    //С„СѓРЅРєС†РёСЏ РѕРїСЂРµРґРµР»СЏРµС‚ СЃРѕСЃРµРґРЅРёРµ СЏС‡РµР№РєРё РґР»СЏ Р·Р°РґР°РЅРЅРѕР№ - РёС… РјРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚ 2 РґРѕ 4
+    //РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РѕРіРѕ, РіРґРµ РЅР°С…РѕРґРёС‚СЃСЏ РґР°РЅРЅР°СЏ СЏС‡РµР№РєР°
     WORD count=0;
     if(cellId>=FIELD_SIZE)
     {
@@ -67,7 +67,7 @@ WORD TGame::GetNeighbours(WORD cellId, WORD *pNeighbours)
 
 BOOL TGame::CheckPipeDetonate(WORD *pPipeCells)
 {
-    //функция проверяет, являются ли все ячейки в списке занятыми шарами одного цвета
+    //С„СѓРЅРєС†РёСЏ РїСЂРѕРІРµСЂСЏРµС‚, СЏРІР»СЏСЋС‚СЃСЏ Р»Рё РІСЃРµ СЏС‡РµР№РєРё РІ СЃРїРёСЃРєРµ Р·Р°РЅСЏС‚С‹РјРё С€Р°СЂР°РјРё РѕРґРЅРѕРіРѕ С†РІРµС‚Р°
     if(cells[pPipeCells[0]].free)
     {
         return FALSE;
@@ -122,16 +122,16 @@ void TGame::New()
         delete[] path;
         path=NULL;
     }
-    //очищаем поле
+    //РѕС‡РёС‰Р°РµРј РїРѕР»Рµ
     ClearField();
-    //создаем начальное кол-во шаров
+    //СЃРѕР·РґР°РµРј РЅР°С‡Р°Р»СЊРЅРѕРµ РєРѕР»-РІРѕ С€Р°СЂРѕРІ
     CreateBalls(START_COUNT);
 }
 
 BOOL TGame::CreateBalls(WORD count)
 {
     WORD *freeCellList,freeCellCount=0;
-    //сначала получаем список всех свободных ячеек
+    //СЃРЅР°С‡Р°Р»Р° РїРѕР»СѓС‡Р°РµРј СЃРїРёСЃРѕРє РІСЃРµС… СЃРІРѕР±РѕРґРЅС‹С… СЏС‡РµРµРє
     freeCellList=new WORD[TOTAL_COUNT];
     for(WORD i=0;i<TOTAL_COUNT;i++)
     {
@@ -142,11 +142,11 @@ BOOL TGame::CreateBalls(WORD count)
     }
     if(freeCellCount<count)
     {
-        //если свободных ячеек недостаточно, то игра окончена
+        //РµСЃР»Рё СЃРІРѕР±РѕРґРЅС‹С… СЏС‡РµРµРє РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ, С‚Рѕ РёРіСЂР° РѕРєРѕРЅС‡РµРЅР°
         gameOver=TRUE;
         return FALSE;
     }
-    //выбираем нужное число свободных ячеек
+    //РІС‹Р±РёСЂР°РµРј РЅСѓР¶РЅРѕРµ С‡РёСЃР»Рѕ СЃРІРѕР±РѕРґРЅС‹С… СЏС‡РµРµРє
     WORD id;
     for(WORD i=0;i<count;i++)
     {
@@ -156,7 +156,7 @@ BOOL TGame::CreateBalls(WORD count)
         cells[freeCellList[id]].free=FALSE;
         cells[freeCellList[id]].isNew=TRUE;
         cells[freeCellList[id]].selected=FALSE;
-        //удаляем полученный номер из списка свободных
+        //СѓРґР°Р»СЏРµРј РїРѕР»СѓС‡РµРЅРЅС‹Р№ РЅРѕРјРµСЂ РёР· СЃРїРёСЃРєР° СЃРІРѕР±РѕРґРЅС‹С…
         for(WORD j=id+1;j<freeCellCount;j++)
         {
             freeCellList[j-1]=freeCellList[j];
@@ -169,12 +169,12 @@ BOOL TGame::CreateBalls(WORD count)
 
 void TGame::Select(WORD cellId)
 {
-    //сначала снимаем выделение со всех шаров, т.к. объект game не хранит отдельно номер выделенного шара
+    //СЃРЅР°С‡Р°Р»Р° СЃРЅРёРјР°РµРј РІС‹РґРµР»РµРЅРёРµ СЃРѕ РІСЃРµС… С€Р°СЂРѕРІ, С‚.Рє. РѕР±СЉРµРєС‚ game РЅРµ С…СЂР°РЅРёС‚ РѕС‚РґРµР»СЊРЅРѕ РЅРѕРјРµСЂ РІС‹РґРµР»РµРЅРЅРѕРіРѕ С€Р°СЂР°
     for(WORD i=0;i<TOTAL_COUNT;i++)
     {
         cells[i].selected=FALSE;
     }
-    //если запрошенная ячейка не свободна, то помечаем активной
+    //РµСЃР»Рё Р·Р°РїСЂРѕС€РµРЅРЅР°СЏ СЏС‡РµР№РєР° РЅРµ СЃРІРѕР±РѕРґРЅР°, С‚Рѕ РїРѕРјРµС‡Р°РµРј Р°РєС‚РёРІРЅРѕР№
     if(!cells[cellId].free)
     {
         cells[cellId].selected=TRUE;
@@ -183,7 +183,7 @@ void TGame::Select(WORD cellId)
 
 BOOL TGame::TryMove(WORD targetCellId)
 {
-    //попытка перемещения в заданную ячейку
+    //РїРѕРїС‹С‚РєР° РїРµСЂРµРјРµС‰РµРЅРёСЏ РІ Р·Р°РґР°РЅРЅСѓСЋ СЏС‡РµР№РєСѓ
     WORD *weight,*currentSet,*goodNeighbours,*allNeighbours,
          currentCount=1,goodNeighbourCount,allNeighbourCount,
          distance=0,
@@ -193,68 +193,68 @@ BOOL TGame::TryMove(WORD targetCellId)
         return FALSE;
     }
     weight=new WORD[TOTAL_COUNT];
-    //алгоритм Дейкстры - вычисление матрицы весов.
-    //Инициализируем свободные ячейки значением TOTAL_COUNT, а занятые 0xffff
+    //Р°Р»РіРѕСЂРёС‚Рј Р”РµР№РєСЃС‚СЂС‹ - РІС‹С‡РёСЃР»РµРЅРёРµ РјР°С‚СЂРёС†С‹ РІРµСЃРѕРІ.
+    //РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј СЃРІРѕР±РѕРґРЅС‹Рµ СЏС‡РµР№РєРё Р·РЅР°С‡РµРЅРёРµРј TOTAL_COUNT, Р° Р·Р°РЅСЏС‚С‹Рµ 0xffff
     for(WORD i=0;i<TOTAL_COUNT;i++)
     {
         weight[i]=cells[i].free ? TOTAL_COUNT : 0xffff;
     }
-    //текущий набор ячеек
+    //С‚РµРєСѓС‰РёР№ РЅР°Р±РѕСЂ СЏС‡РµРµРє
     currentSet=new WORD[TOTAL_COUNT];
-    //набор "хороших" соседей - поиск будет продолжен по ним
+    //РЅР°Р±РѕСЂ "С…РѕСЂРѕС€РёС…" СЃРѕСЃРµРґРµР№ - РїРѕРёСЃРє Р±СѓРґРµС‚ РїСЂРѕРґРѕР»Р¶РµРЅ РїРѕ РЅРёРј
     goodNeighbours=new WORD[TOTAL_COUNT];
-    //все соседи текущей ячейки (от 2 до 4)
+    //РІСЃРµ СЃРѕСЃРµРґРё С‚РµРєСѓС‰РµР№ СЏС‡РµР№РєРё (РѕС‚ 2 РґРѕ 4)
     allNeighbours=new WORD[4];
-    //начальная ячейка
+    //РЅР°С‡Р°Р»СЊРЅР°СЏ СЏС‡РµР№РєР°
     selectedId=GetSelected();
-    //инициализируем текущей набор ячеек только одной, т.е. текущей
+    //РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј С‚РµРєСѓС‰РµР№ РЅР°Р±РѕСЂ СЏС‡РµРµРє С‚РѕР»СЊРєРѕ РѕРґРЅРѕР№, С‚.Рµ. С‚РµРєСѓС‰РµР№
     currentSet[0]=selectedId;
     weight[currentSet[0]]=0;
     BOOL finished=FALSE;
     do
     {
-        distance++; //счетчик расстояния
-        goodNeighbourCount=0; //"хорошие" соседи - это свободные соседние ячейки, помеченные бОльшим расстоянием, чем оно реально может быть
-        //проходим по всем текущим ячейкам
+        distance++; //СЃС‡РµС‚С‡РёРє СЂР°СЃСЃС‚РѕСЏРЅРёСЏ
+        goodNeighbourCount=0; //"С…РѕСЂРѕС€РёРµ" СЃРѕСЃРµРґРё - СЌС‚Рѕ СЃРІРѕР±РѕРґРЅС‹Рµ СЃРѕСЃРµРґРЅРёРµ СЏС‡РµР№РєРё, РїРѕРјРµС‡РµРЅРЅС‹Рµ Р±РћР»СЊС€РёРј СЂР°СЃСЃС‚РѕСЏРЅРёРµРј, С‡РµРј РѕРЅРѕ СЂРµР°Р»СЊРЅРѕ РјРѕР¶РµС‚ Р±С‹С‚СЊ
+        //РїСЂРѕС…РѕРґРёРј РїРѕ РІСЃРµРј С‚РµРєСѓС‰РёРј СЏС‡РµР№РєР°Рј
         for(WORD i=0;(i<currentCount);i++)
         {
-            //получаем всех соседей одной из текущих ячеек
-            allNeighbourCount=GetNeighbours(currentSet[i],allNeighbours); //все 2, 3 или 4 соседа
+            //РїРѕР»СѓС‡Р°РµРј РІСЃРµС… СЃРѕСЃРµРґРµР№ РѕРґРЅРѕР№ РёР· С‚РµРєСѓС‰РёС… СЏС‡РµРµРє
+            allNeighbourCount=GetNeighbours(currentSet[i],allNeighbours); //РІСЃРµ 2, 3 РёР»Рё 4 СЃРѕСЃРµРґР°
             for(WORD j=0;j<allNeighbourCount;j++)
             {
-                //если соседняя ячейка свободна и ее вес больше текущего счетчика состояния, то обновляем ее и запоминаем, как хорошего соседа
+                //РµСЃР»Рё СЃРѕСЃРµРґРЅСЏСЏ СЏС‡РµР№РєР° СЃРІРѕР±РѕРґРЅР° Рё РµРµ РІРµСЃ Р±РѕР»СЊС€Рµ С‚РµРєСѓС‰РµРіРѕ СЃС‡РµС‚С‡РёРєР° СЃРѕСЃС‚РѕСЏРЅРёСЏ, С‚Рѕ РѕР±РЅРѕРІР»СЏРµРј РµРµ Рё Р·Р°РїРѕРјРёРЅР°РµРј, РєР°Рє С…РѕСЂРѕС€РµРіРѕ СЃРѕСЃРµРґР°
                 if((weight[allNeighbours[j]]!=0xffff)&&(weight[allNeighbours[j]]>distance))
                 {
                     weight[allNeighbours[j]]=distance;
                     goodNeighbours[goodNeighbourCount++]=allNeighbours[j];
                     if(allNeighbours[j]==targetCellId)
                     {
-                        //если эта ячейка целевая, то дальнейшее заполнение матрицы весов нецелесообразно
+                        //РµСЃР»Рё СЌС‚Р° СЏС‡РµР№РєР° С†РµР»РµРІР°СЏ, С‚Рѕ РґР°Р»СЊРЅРµР№С€РµРµ Р·Р°РїРѕР»РЅРµРЅРёРµ РјР°С‚СЂРёС†С‹ РІРµСЃРѕРІ РЅРµС†РµР»РµСЃРѕРѕР±СЂР°Р·РЅРѕ
                         finished=TRUE;
                     }
                 }
             }
         }
-        //переносим хороших соседей в текущее множество ячеек для следующей итерации
+        //РїРµСЂРµРЅРѕСЃРёРј С…РѕСЂРѕС€РёС… СЃРѕСЃРµРґРµР№ РІ С‚РµРєСѓС‰РµРµ РјРЅРѕР¶РµСЃС‚РІРѕ СЏС‡РµРµРє РґР»СЏ СЃР»РµРґСѓСЋС‰РµР№ РёС‚РµСЂР°С†РёРё
         memcpy(currentSet,goodNeighbours,goodNeighbourCount*sizeof(WORD));
         currentCount=goodNeighbourCount;
-    }while((goodNeighbourCount>0)&&!finished); //цикл выполняется, пока не будет достигнута целевая ячейка, либо пока не будет полностью заполнена матрица весов
-    //если путь существует, то вес целевой ячейки изменится
+    }while((goodNeighbourCount>0)&&!finished); //С†РёРєР» РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ, РїРѕРєР° РЅРµ Р±СѓРґРµС‚ РґРѕСЃС‚РёРіРЅСѓС‚Р° С†РµР»РµРІР°СЏ СЏС‡РµР№РєР°, Р»РёР±Рѕ РїРѕРєР° РЅРµ Р±СѓРґРµС‚ РїРѕР»РЅРѕСЃС‚СЊСЋ Р·Р°РїРѕР»РЅРµРЅР° РјР°С‚СЂРёС†Р° РІРµСЃРѕРІ
+    //РµСЃР»Рё РїСѓС‚СЊ СЃСѓС‰РµСЃС‚РІСѓРµС‚, С‚Рѕ РІРµСЃ С†РµР»РµРІРѕР№ СЏС‡РµР№РєРё РёР·РјРµРЅРёС‚СЃСЏ
     if(weight[targetCellId]!=TOTAL_COUNT)
     {
-        //строим путь - для этого проходим по ячейкам в обратном направлении,
-        //то есть от целевой в текущую
+        //СЃС‚СЂРѕРёРј РїСѓС‚СЊ - РґР»СЏ СЌС‚РѕРіРѕ РїСЂРѕС…РѕРґРёРј РїРѕ СЏС‡РµР№РєР°Рј РІ РѕР±СЂР°С‚РЅРѕРј РЅР°РїСЂР°РІР»РµРЅРёРё,
+        //С‚Рѕ РµСЃС‚СЊ РѕС‚ С†РµР»РµРІРѕР№ РІ С‚РµРєСѓС‰СѓСЋ
         pathLen=distance;
         path=new WORD[pathLen];
         cellId=targetCellId;
         path[pathLen-1]=cellId;
         for(WORD i=1;i<pathLen;i++)
         {
-            //получаем всех соседей ячейки (начиная с целевой)
+            //РїРѕР»СѓС‡Р°РµРј РІСЃРµС… СЃРѕСЃРµРґРµР№ СЏС‡РµР№РєРё (РЅР°С‡РёРЅР°СЏ СЃ С†РµР»РµРІРѕР№)
             allNeighbourCount=GetNeighbours(cellId,allNeighbours);
             for(WORD j=0;j<allNeighbourCount;j++)
             {
-                //с каждым шагом вес должен уменьшаться на единицу - это гарантировано матрицей весов
+                //СЃ РєР°Р¶РґС‹Рј С€Р°РіРѕРј РІРµСЃ РґРѕР»Р¶РµРЅ СѓРјРµРЅСЊС€Р°С‚СЊСЃСЏ РЅР° РµРґРёРЅРёС†Сѓ - СЌС‚Рѕ РіР°СЂР°РЅС‚РёСЂРѕРІР°РЅРѕ РјР°С‚СЂРёС†РµР№ РІРµСЃРѕРІ
                 if(weight[allNeighbours[j]]==pathLen-i)
                 {
                     cellId=allNeighbours[j];
@@ -263,7 +263,7 @@ BOOL TGame::TryMove(WORD targetCellId)
                 }
             }
         }
-        //освобождаем выделенную ячейку и переносим шар в целевую
+        //РѕСЃРІРѕР±РѕР¶РґР°РµРј РІС‹РґРµР»РµРЅРЅСѓСЋ СЏС‡РµР№РєСѓ Рё РїРµСЂРµРЅРѕСЃРёРј С€Р°СЂ РІ С†РµР»РµРІСѓСЋ
         ZeroMemory(&cells[targetCellId],sizeof(TCell));
         cells[targetCellId].colorIndex=cells[selectedId].colorIndex;
         ZeroMemory(&cells[selectedId],sizeof(TCell));
@@ -278,31 +278,31 @@ BOOL TGame::TryMove(WORD targetCellId)
 
 BOOL TGame::DetonateTest()
 {
-    //тест на взрыв
+    //С‚РµСЃС‚ РЅР° РІР·СЂС‹РІ
     WORD detonates=0;
     WORD *pipe;
     pipe=new WORD[DETONATE_COUNT];
-    //пробуем все возможные горизонтальные варианты
+    //РїСЂРѕР±СѓРµРј РІСЃРµ РІРѕР·РјРѕР¶РЅС‹Рµ РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅС‹Рµ РІР°СЂРёР°РЅС‚С‹
     for(WORD i=0;i<FIELD_SIZE;i++)
     {
-        //j соответствует начальному вертикальному ряду
+        //j СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РЅР°С‡Р°Р»СЊРЅРѕРјСѓ РІРµСЂС‚РёРєР°Р»СЊРЅРѕРјСѓ СЂСЏРґСѓ
         for(WORD j=0;j<=FIELD_SIZE-DETONATE_COUNT;j++)
         {
             for(WORD k=0;k<DETONATE_COUNT;k++)
             {
                 pipe[k]=i*FIELD_SIZE+j+k;
             }
-            //отправляем на проверку цвета
+            //РѕС‚РїСЂР°РІР»СЏРµРј РЅР° РїСЂРѕРІРµСЂРєСѓ С†РІРµС‚Р°
             if(CheckPipeDetonate(pipe))
             {
                 detonates++;
             }
         }
     }
-    //пробуем все возможные вертикальные варианты
+    //РїСЂРѕР±СѓРµРј РІСЃРµ РІРѕР·РјРѕР¶РЅС‹Рµ РІРµСЂС‚РёРєР°Р»СЊРЅС‹Рµ РІР°СЂРёР°РЅС‚С‹
     for(WORD i=0;i<FIELD_SIZE;i++)
     {
-        //j соответствует начальному горизонтальному ряду
+        //j СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РЅР°С‡Р°Р»СЊРЅРѕРјСѓ РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅРѕРјСѓ СЂСЏРґСѓ
         for(WORD j=0;j<=FIELD_SIZE-DETONATE_COUNT;j++)
         {
             for(WORD k=0;k<DETONATE_COUNT;k++)
@@ -315,7 +315,7 @@ BOOL TGame::DetonateTest()
             }
         }
     }
-    //пробуем все прямые диагонали
+    //РїСЂРѕР±СѓРµРј РІСЃРµ РїСЂСЏРјС‹Рµ РґРёР°РіРѕРЅР°Р»Рё
     for(WORD i=0;i<=FIELD_SIZE-DETONATE_COUNT;i++)
     {
         for(WORD j=0;j<=FIELD_SIZE-DETONATE_COUNT;j++)
@@ -330,7 +330,7 @@ BOOL TGame::DetonateTest()
             }
         }
     }
-    //пробуем все обратные диагонали
+    //РїСЂРѕР±СѓРµРј РІСЃРµ РѕР±СЂР°С‚РЅС‹Рµ РґРёР°РіРѕРЅР°Р»Рё
     for(WORD i=DETONATE_COUNT-1;i<FIELD_SIZE;i++)
     {
         for(WORD j=0;j<=FIELD_SIZE-DETONATE_COUNT;j++)
@@ -351,10 +351,10 @@ BOOL TGame::DetonateTest()
 
 WORD TGame::GetNewBallList(TBallInfo **ppNewList)
 {
-    //функция возвращает список недавно созданных шаров,
-    //после чего они уже считаются старыми (флаг isNew сбрасывается)
+    //С„СѓРЅРєС†РёСЏ РІРѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РЅРµРґР°РІРЅРѕ СЃРѕР·РґР°РЅРЅС‹С… С€Р°СЂРѕРІ,
+    //РїРѕСЃР»Рµ С‡РµРіРѕ РѕРЅРё СѓР¶Рµ СЃС‡РёС‚Р°СЋС‚СЃСЏ СЃС‚Р°СЂС‹РјРё (С„Р»Р°Рі isNew СЃР±СЂР°СЃС‹РІР°РµС‚СЃСЏ)
     WORD newBallCount=0,currentId=0;
-    //сначала считаем количество
+    //СЃРЅР°С‡Р°Р»Р° СЃС‡РёС‚Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ
     for(WORD i=0;i<TOTAL_COUNT;i++)
     {
         if(cells[i].isNew)
@@ -371,7 +371,7 @@ WORD TGame::GetNewBallList(TBallInfo **ppNewList)
     {
         if(cells[i].isNew)
         {
-            //пишем в список ID и цвет d3dcolorvalue
+            //РїРёС€РµРј РІ СЃРїРёСЃРѕРє ID Рё С†РІРµС‚ d3dcolorvalue
             cells[i].isNew=FALSE;
             (*ppNewList)[currentId].cellId=i;
             (*ppNewList)[currentId].color=GetColorByIndex(cells[i].colorIndex);
@@ -383,14 +383,14 @@ WORD TGame::GetNewBallList(TBallInfo **ppNewList)
 
 WORD TGame::GetLastMovePath(WORD **ppMovePath)
 {
-    //функция возвращает путь последнего перемещения шара
+    //С„СѓРЅРєС†РёСЏ РІРѕР·РІСЂР°С‰Р°РµС‚ РїСѓС‚СЊ РїРѕСЃР»РµРґРЅРµРіРѕ РїРµСЂРµРјРµС‰РµРЅРёСЏ С€Р°СЂР°
     if(path==NULL)
     {
         return 0;
     }
     *ppMovePath=new WORD[pathLen];
     memcpy(*ppMovePath,path,pathLen*sizeof(WORD));
-    //после этого удаляем путь
+    //РїРѕСЃР»Рµ СЌС‚РѕРіРѕ СѓРґР°Р»СЏРµРј РїСѓС‚СЊ
     delete[] path;
     path=NULL;
     WORD tmp=pathLen;
@@ -400,8 +400,8 @@ WORD TGame::GetLastMovePath(WORD **ppMovePath)
 
 WORD TGame::GetDetonateList(WORD **ppDetonateList)
 {
-    //функция возвращает список взрывающихся шаров, после чего
-    //удаляет их
+    //С„СѓРЅРєС†РёСЏ РІРѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РІР·СЂС‹РІР°СЋС‰РёС…СЃСЏ С€Р°СЂРѕРІ, РїРѕСЃР»Рµ С‡РµРіРѕ
+    //СѓРґР°Р»СЏРµС‚ РёС…
     WORD detonateCount=0,currentId=0;
     for(WORD i=0;i<TOTAL_COUNT;i++)
     {
@@ -425,7 +425,7 @@ WORD TGame::GetDetonateList(WORD **ppDetonateList)
             currentId++;
         }
     }
-    //увеличиваем очки пропорционально числу взорванных шаров
+    //СѓРІРµР»РёС‡РёРІР°РµРј РѕС‡РєРё РїСЂРѕРїРѕСЂС†РёРѕРЅР°Р»СЊРЅРѕ С‡РёСЃР»Сѓ РІР·РѕСЂРІР°РЅРЅС‹С… С€Р°СЂРѕРІ
     score+=detonateCount*100;
     return detonateCount;
 }

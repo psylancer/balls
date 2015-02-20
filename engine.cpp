@@ -1,4 +1,4 @@
-#include "engine.h"
+п»ї#include "engine.h"
 #define __DIE__(msg) MessageBox(NULL,msg,_T("Error"),0); \
                        PostQuitMessage(0);
 
@@ -275,7 +275,7 @@ void TAnimate::SetFrame(WORD frameId, D3DXMATRIX frame)
 
 void TAnimate::UpdatePosition(clock_t deltaTime)
 {
-    //position меняется в диапазоне 0..1
+    //position РјРµРЅСЏРµС‚СЃСЏ РІ РґРёР°РїР°Р·РѕРЅРµ 0..1
     position+=deltaTime/(timeLength*1000.0f);
     if(position>1.0f)
     {
@@ -292,9 +292,9 @@ void TAnimate::ApplyTransform()
     D3DXMATRIX mCurrent;
     pDevice->GetTransform(D3DTS_WORLD,&mCurrent);
     FLOAT progress=position*(frameCount-1);
-    //находим ближайший слева "кадр" анимации
+    //РЅР°С…РѕРґРёРј Р±Р»РёР¶Р°Р№С€РёР№ СЃР»РµРІР° "РєР°РґСЂ" Р°РЅРёРјР°С†РёРё
     WORD nearest=floor(progress);
-    //t - параметр для линейной интерполяции двух матриц
+    //t - РїР°СЂР°РјРµС‚СЂ РґР»СЏ Р»РёРЅРµР№РЅРѕР№ РёРЅС‚РµСЂРїРѕР»СЏС†РёРё РґРІСѓС… РјР°С‚СЂРёС†
     FLOAT t=progress-nearest;
     if(nearest>frameCount-1)
     {
@@ -302,12 +302,12 @@ void TAnimate::ApplyTransform()
     }
     else if(nearest==frameCount-1)
     {
-        //если кадр последний, то ничего не интерполируем
+        //РµСЃР»Рё РєР°РґСЂ РїРѕСЃР»РµРґРЅРёР№, С‚Рѕ РЅРёС‡РµРіРѕ РЅРµ РёРЅС‚РµСЂРїРѕР»РёСЂСѓРµРј
         D3DXMatrixMultiply(&mCurrent,&(frames[0]),&mCurrent);
     }
     else
     {
-        //умножаем мировую матрицу на интерполированную матрицу анимации
+        //СѓРјРЅРѕР¶Р°РµРј РјРёСЂРѕРІСѓСЋ РјР°С‚СЂРёС†Сѓ РЅР° РёРЅС‚РµСЂРїРѕР»РёСЂРѕРІР°РЅРЅСѓСЋ РјР°С‚СЂРёС†Сѓ Р°РЅРёРјР°С†РёРё
         D3DXMATRIX tmp=frames[nearest]+t*(frames[nearest+1]-frames[nearest]);
         D3DXMatrixMultiply(&mCurrent,&tmp,&mCurrent);
     }
@@ -360,18 +360,18 @@ void TParticleSystem::Init(TBallInfo *ballList, WORD count)
         z=((ballList[i].cellId % FIELD_SIZE) - HALF_FIELD_SIZE + 0.5f) * CELL_SIZE;
         for(WORD j=0;j<PSYSTEM_PERBALL;j++)
         {
-            //заполняем внутренности каждого шара случайно расположенными частицами
+            //Р·Р°РїРѕР»РЅСЏРµРј РІРЅСѓС‚СЂРµРЅРЅРѕСЃС‚Рё РєР°Р¶РґРѕРіРѕ С€Р°СЂР° СЃР»СѓС‡Р°Р№РЅРѕ СЂР°СЃРїРѕР»РѕР¶РµРЅРЅС‹РјРё С‡Р°СЃС‚РёС†Р°РјРё
             idx=i*PSYSTEM_PERBALL+j;
             offset.x=BALL_R*((float)rand()/RAND_MAX-0.5f);
             offset.y=BALL_R*((float)rand()/RAND_MAX-0.5f);
             offset.z=BALL_R*((float)rand()/RAND_MAX-0.5f);
-            //массив parts будет содержать абсолютные координаты частиц
+            //РјР°СЃСЃРёРІ parts Р±СѓРґРµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ Р°Р±СЃРѕР»СЋС‚РЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ С‡Р°СЃС‚РёС†
             parts[idx].x=x+offset.x;
             parts[idx].y=BALL_R+offset.y;
             parts[idx].z=z+offset.z;
-            //а массив dirs будет содержать векторы направления движения:
-            //вектор скорости каждой частицы будет направлен из центра шара,
-            //чтобы все разлеталось в разные стороны
+            //Р° РјР°СЃСЃРёРІ dirs Р±СѓРґРµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ РІРµРєС‚РѕСЂС‹ РЅР°РїСЂР°РІР»РµРЅРёСЏ РґРІРёР¶РµРЅРёСЏ:
+            //РІРµРєС‚РѕСЂ СЃРєРѕСЂРѕСЃС‚Рё РєР°Р¶РґРѕР№ С‡Р°СЃС‚РёС†С‹ Р±СѓРґРµС‚ РЅР°РїСЂР°РІР»РµРЅ РёР· С†РµРЅС‚СЂР° С€Р°СЂР°,
+            //С‡С‚РѕР±С‹ РІСЃРµ СЂР°Р·Р»РµС‚Р°Р»РѕСЃСЊ РІ СЂР°Р·РЅС‹Рµ СЃС‚РѕСЂРѕРЅС‹
             D3DXVec3Normalize(&dirs[idx],&offset);
             parts[idx].color=D3DCOLOR_COLORVALUE(ballList[i].color.r,ballList[i].color.g,ballList[i].color.b,ballList[i].color.a);
         }
@@ -393,14 +393,14 @@ BOOL TParticleSystem::IsActive()
 
 void TParticleSystem::Update(clock_t deltaTime)
 {
-    //сначала обновляем текущее время жизни системы частиц
+    //СЃРЅР°С‡Р°Р»Р° РѕР±РЅРѕРІР»СЏРµРј С‚РµРєСѓС‰РµРµ РІСЂРµРјСЏ Р¶РёР·РЅРё СЃРёСЃС‚РµРјС‹ С‡Р°СЃС‚РёС†
     FLOAT t=(float)deltaTime/1000.0f;
     currentLife+=t;
-    //затем вычисляем изменение вектора положения
+    //Р·Р°С‚РµРј РІС‹С‡РёСЃР»СЏРµРј РёР·РјРµРЅРµРЅРёРµ РІРµРєС‚РѕСЂР° РїРѕР»РѕР¶РµРЅРёСЏ
     t*=PSYSTEM_VELOCITY;
     if(currentLife>PSYSTEM_LIFETIME)
     {
-        //завершаем работу системы частиц
+        //Р·Р°РІРµСЂС€Р°РµРј СЂР°Р±РѕС‚Сѓ СЃРёСЃС‚РµРјС‹ С‡Р°СЃС‚РёС†
         active=FALSE;
         pVb->Release();
         pVb=NULL;
@@ -411,7 +411,7 @@ void TParticleSystem::Update(clock_t deltaTime)
         parts=NULL;
         return;
     }
-    //обновляем позиции частиц согласно направлениям их движения
+    //РѕР±РЅРѕРІР»СЏРµРј РїРѕР·РёС†РёРё С‡Р°СЃС‚РёС† СЃРѕРіР»Р°СЃРЅРѕ РЅР°РїСЂР°РІР»РµРЅРёСЏРј РёС… РґРІРёР¶РµРЅРёСЏ
     for(WORD i=0;i<particleCount;i++)
     {
         parts[i].x+=dirs[i].x*t;
@@ -423,14 +423,14 @@ void TParticleSystem::Update(clock_t deltaTime)
     {
         __DIE__(_T("IDirect3DVertexBuffer9::Lock failed."));
     }
-    //поскольку буфер у нас динамический, просто перезаписываем его
+    //РїРѕСЃРєРѕР»СЊРєСѓ Р±СѓС„РµСЂ Сѓ РЅР°СЃ РґРёРЅР°РјРёС‡РµСЃРєРёР№, РїСЂРѕСЃС‚Рѕ РїРµСЂРµР·Р°РїРёСЃС‹РІР°РµРј РµРіРѕ
     memcpy(tmp,parts,particleCount*sizeof(TParticle));
     pVb->Unlock();
 }
 
 void TParticleSystem::Render()
 {
-    //частицы рендерим с выключенным освещением
+    //С‡Р°СЃС‚РёС†С‹ СЂРµРЅРґРµСЂРёРј СЃ РІС‹РєР»СЋС‡РµРЅРЅС‹Рј РѕСЃРІРµС‰РµРЅРёРµРј
     pDevice->SetRenderState(D3DRS_LIGHTING,FALSE);
     pDevice->SetRenderState(D3DRS_POINTSPRITEENABLE,TRUE);
     pDevice->SetRenderState(D3DRS_POINTSCALEENABLE,TRUE);
@@ -452,28 +452,28 @@ void TEngine::InitD3d()
     }
     D3DCAPS9 caps;
     D3DDISPLAYMODE mode;
-    //из devcaps проверяем только HWTRANSFORMANDLIGHT
+    //РёР· devcaps РїСЂРѕРІРµСЂСЏРµРј С‚РѕР»СЊРєРѕ HWTRANSFORMANDLIGHT
     pD3d->GetDeviceCaps(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,&caps);
     pD3d->GetAdapterDisplayMode(D3DADAPTER_DEFAULT,&mode);
     ZeroMemory(&settings,sizeof(D3DPRESENT_PARAMETERS));
     settings.AutoDepthStencilFormat=D3DFMT_D24S8;
     settings.BackBufferCount=1;
-    //несмотря на полноэкранный режим, берем текущие настройки дисплея
+    //РЅРµСЃРјРѕС‚СЂСЏ РЅР° РїРѕР»РЅРѕСЌРєСЂР°РЅРЅС‹Р№ СЂРµР¶РёРј, Р±РµСЂРµРј С‚РµРєСѓС‰РёРµ РЅР°СЃС‚СЂРѕР№РєРё РґРёСЃРїР»РµСЏ
     settings.BackBufferFormat=mode.Format;
     settings.BackBufferHeight=mode.Height;
     settings.BackBufferWidth=mode.Width;
     settings.EnableAutoDepthStencil=TRUE;
     settings.hDeviceWindow=hWindow;
     settings.SwapEffect=D3DSWAPEFFECT_DISCARD;
-    settings.FullScreen_RefreshRateInHz=mode.RefreshRate;
-    settings.Windowed=FALSE;
+    //settings.FullScreen_RefreshRateInHz=mode.RefreshRate;
+    settings.Windowed=TRUE;
     if(FAILED(pD3d->CreateDevice(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,hWindow,(caps.DevCaps & D3DDEVCAPS_HWTRANSFORMANDLIGHT) ? D3DCREATE_HARDWARE_VERTEXPROCESSING : D3DCREATE_SOFTWARE_VERTEXPROCESSING,&settings,&pDevice)))
     {
         __DIE__(_T("IDirect3D9::CreateDevice failed."));
     }
     D3DLIGHT9 light;
     ZeroMemory(&light,sizeof(D3DLIGHT9));
-    //источник света будет расположен над центром платформы на высоте 100 единиц
+    //РёСЃС‚РѕС‡РЅРёРє СЃРІРµС‚Р° Р±СѓРґРµС‚ СЂР°СЃРїРѕР»РѕР¶РµРЅ РЅР°Рґ С†РµРЅС‚СЂРѕРј РїР»Р°С‚С„РѕСЂРјС‹ РЅР° РІС‹СЃРѕС‚Рµ 100 РµРґРёРЅРёС†
     light.Type=D3DLIGHT_POINT;
     light.Position=D3DXVECTOR3(0.0f,100.0f,0.0f);
     light.Attenuation0=1.0f;
@@ -486,7 +486,7 @@ void TEngine::InitD3d()
     pDevice->SetRenderState(D3DRS_CULLMODE,D3DCULL_CCW);
     pDevice->SetRenderState(D3DRS_SPECULARENABLE,TRUE);
     pDevice->SetRenderState(D3DRS_ZENABLE,D3DZB_TRUE);
-    //остальные настройки рендера нужны только для системы частиц
+    //РѕСЃС‚Р°Р»СЊРЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё СЂРµРЅРґРµСЂР° РЅСѓР¶РЅС‹ С‚РѕР»СЊРєРѕ РґР»СЏ СЃРёСЃС‚РµРјС‹ С‡Р°СЃС‚РёС†
     pDevice->SetRenderState(D3DRS_POINTSIZE,Float2Dword(5.0f));
     pDevice->SetRenderState(D3DRS_POINTSIZE_MIN,Float2Dword(1.0f));
     pDevice->SetRenderState(D3DRS_POINTSIZE_MAX,Float2Dword(10.0f));
@@ -502,7 +502,7 @@ void TEngine::InitD3d()
 
 void TEngine::InitGeometry()
 {
-    //инициализации геометрии одной ячейки
+    //РёРЅРёС†РёР°Р»РёР·Р°С†РёРё РіРµРѕРјРµС‚СЂРёРё РѕРґРЅРѕР№ СЏС‡РµР№РєРё
     cellGeometry=new TGeometry(pDevice);
     cellGeometry->Init(1);
     cellGeometry->SetMaterialColor3f(MAT_DESC_AMBIENT,1.0f,0.0f,0.0f);
@@ -572,11 +572,11 @@ void TEngine::InitGeometry()
     atom->SetIndices(indices);
     delete[] indices;
 
-    //геометрия шара
+    //РіРµРѕРјРµС‚СЂРёСЏ С€Р°СЂР°
     ballGeometry=new TGeometry(pDevice);
     ballGeometry->Init(2+BALL_STRIPS);
     ballGeometry->SetMaterialPower(15.0f);
-    //верхний "зонтик"
+    //РІРµСЂС…РЅРёР№ "Р·РѕРЅС‚РёРє"
     atom=ballGeometry->GetAtom(0);
     atom->Init(BALL_SECTORS+1,BALL_SECTORS+2,BALL_SECTORS,D3DPT_TRIANGLEFAN);
     vertices=new TVertex[BALL_SECTORS+1];
@@ -600,7 +600,7 @@ void TEngine::InitGeometry()
     }
     indices[BALL_SECTORS+1]=1;
     atom->SetIndices(indices);
-    //нижний "зонтик"
+    //РЅРёР¶РЅРёР№ "Р·РѕРЅС‚РёРє"
     atom=ballGeometry->GetAtom(1);
     atom->Init(BALL_SECTORS+1,BALL_SECTORS+2,BALL_SECTORS,D3DPT_TRIANGLEFAN);
     vertices[0].x=0.0f; vertices[0].y=-BALL_R; vertices[0].z=0.0f;
@@ -616,7 +616,7 @@ void TEngine::InitGeometry()
     atom->SetIndices(indices);
     delete[] vertices;
     delete[] indices;
-    //полоски (strips)
+    //РїРѕР»РѕСЃРєРё (strips)
     vertices=new TVertex[BALL_SECTORS*2];
     indices=new WORD[(BALL_SECTORS+1)*2];
     FLOAT next_r,next_y;
@@ -651,7 +651,7 @@ void TEngine::InitGeometry()
 
 void TEngine::InitAnimation()
 {
-    //анимация прыжка
+    //Р°РЅРёРјР°С†РёСЏ РїСЂС‹Р¶РєР°
     jumpAnimation=new TAnimate(pDevice);
     jumpAnimation->Init(5,ANIMATE_JUMP_LEN,FALSE);
     D3DXMATRIX tmp;
@@ -666,14 +666,14 @@ void TEngine::InitAnimation()
     D3DXMatrixTranslation(&tmp,0.0f,-BALL_R*0.45,0.0f);
     D3DXMatrixMultiply(&tmp,&tmp,&mScale);
     jumpAnimation->SetFrame(3,tmp);
-    //анимация появления
+    //Р°РЅРёРјР°С†РёСЏ РїРѕСЏРІР»РµРЅРёСЏ
     appearAnimation=new TAnimate(pDevice);
     appearAnimation->Init(2,ANIMATE_APPEAR_LEN,TRUE);
     D3DXMatrixScaling(&mScale,0.2f,0.2f,0.2f);
     D3DXMatrixIdentity(&tmp);
     appearAnimation->SetFrame(0,mScale);
     appearAnimation->SetFrame(1,tmp);
-    //анимация движения - просто заготовка, кадры записываются по факту
+    //Р°РЅРёРјР°С†РёСЏ РґРІРёР¶РµРЅРёСЏ - РїСЂРѕСЃС‚Рѕ Р·Р°РіРѕС‚РѕРІРєР°, РєР°РґСЂС‹ Р·Р°РїРёСЃС‹РІР°СЋС‚СЃСЏ РїРѕ С„Р°РєС‚Сѓ
     moveAnimation=new TAnimate(pDevice);
 }
 
@@ -681,7 +681,7 @@ void TEngine::DrawPlatform()
 {
     D3DXMATRIX mWorld,mCurrent;
     pDevice->GetTransform(D3DTS_WORLD,&mCurrent);
-    //проходя по всем ячейкам, рисуем платформу
+    //РїСЂРѕС…РѕРґСЏ РїРѕ РІСЃРµРј СЏС‡РµР№РєР°Рј, СЂРёСЃСѓРµРј РїР»Р°С‚С„РѕСЂРјСѓ
     for(WORD i=0;i<FIELD_SIZE;i++)
     {
         for(WORD j=0;j<FIELD_SIZE;j++)
@@ -707,14 +707,14 @@ void TEngine::DrawBalls()
         }
         row=i / FIELD_SIZE;
         col=i % FIELD_SIZE;
-        //сначала переносим начало координат в нужную ячейку
+        //СЃРЅР°С‡Р°Р»Р° РїРµСЂРµРЅРѕСЃРёРј РЅР°С‡Р°Р»Рѕ РєРѕРѕСЂРґРёРЅР°С‚ РІ РЅСѓР¶РЅСѓСЋ СЏС‡РµР№РєСѓ
         D3DXMatrixTranslation(&mWorld,(row-HALF_FIELD_SIZE+0.5)*CELL_SIZE,BALL_R,(col-HALF_FIELD_SIZE+0.5)*CELL_SIZE);
         pDevice->SetTransform(D3DTS_WORLD,&mWorld);
         ballGeometry->SetMaterialColorValue(MAT_DESC_AMBIENT,balls[i].color);
         ballGeometry->SetMaterialColorValue(MAT_DESC_SPECULAR,balls[i].color);
         if(balls[i].jumping)
         {
-            //если шар прыгающий, то пытаемся применить трансформацию прыжка
+            //РµСЃР»Рё С€Р°СЂ РїСЂС‹РіР°СЋС‰РёР№, С‚Рѕ РїС‹С‚Р°РµРјСЃСЏ РїСЂРёРјРµРЅРёС‚СЊ С‚СЂР°РЅСЃС„РѕСЂРјР°С†РёСЋ РїСЂС‹Р¶РєР°
             if(!jumpAnimation->IsActive())
             {
                 balls[i].jumping=FALSE;
@@ -726,7 +726,7 @@ void TEngine::DrawBalls()
         }
         else if(balls[i].appearing)
         {
-            //если шар появляющийся, то пытаемся применить трансформацию появления
+            //РµСЃР»Рё С€Р°СЂ РїРѕСЏРІР»СЏСЋС‰РёР№СЃСЏ, С‚Рѕ РїС‹С‚Р°РµРјСЃСЏ РїСЂРёРјРµРЅРёС‚СЊ С‚СЂР°РЅСЃС„РѕСЂРјР°С†РёСЋ РїРѕСЏРІР»РµРЅРёСЏ
             if(!appearAnimation->IsActive())
             {
                 balls[i].appearing=FALSE;
@@ -738,14 +738,14 @@ void TEngine::DrawBalls()
         }
         else if(balls[i].moving)
         {
-            //если шар в движении, то пытаемся применить трансформацию перемещения
+            //РµСЃР»Рё С€Р°СЂ РІ РґРІРёР¶РµРЅРёРё, С‚Рѕ РїС‹С‚Р°РµРјСЃСЏ РїСЂРёРјРµРЅРёС‚СЊ С‚СЂР°РЅСЃС„РѕСЂРјР°С†РёСЋ РїРµСЂРµРјРµС‰РµРЅРёСЏ
             if(!moveAnimation->IsActive())
             {
                 balls[i].moving=FALSE;
             }
             else
             {
-                //предварительно возращаем начало координат в центр платформы!
+                //РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ РІРѕР·СЂР°С‰Р°РµРј РЅР°С‡Р°Р»Рѕ РєРѕРѕСЂРґРёРЅР°С‚ РІ С†РµРЅС‚СЂ РїР»Р°С‚С„РѕСЂРјС‹!
                 D3DXMatrixIdentity(&mWorld);
                 pDevice->SetTransform(D3DTS_WORLD,&mWorld);
                 moveAnimation->ApplyTransform();
@@ -827,16 +827,16 @@ void TEngine::AppearBalls(TBallInfo *info, WORD count)
 
 void TEngine::MoveBall(WORD *path, WORD pathLen)
 {
-    //массив path содержит номера ячеек, кроме начальной
+    //РјР°СЃСЃРёРІ path СЃРѕРґРµСЂР¶РёС‚ РЅРѕРјРµСЂР° СЏС‡РµРµРє, РєСЂРѕРјРµ РЅР°С‡Р°Р»СЊРЅРѕР№
     moveAnimation->Init(pathLen+1,pathLen*ANIMATE_MOVE_LEN,TRUE);
     D3DXMATRIX tmp;
     WORD selectedId;
-    //сначала находим выбранный шар
+    //СЃРЅР°С‡Р°Р»Р° РЅР°С…РѕРґРёРј РІС‹Р±СЂР°РЅРЅС‹Р№ С€Р°СЂ
     for(WORD i=0;i<TOTAL_COUNT;i++)
     {
         if(!balls[i].free && balls[i].jumping)
         {
-            //логически переносим шар в целевую ячейку и ставим флаг moving=TRUE
+            //Р»РѕРіРёС‡РµСЃРєРё РїРµСЂРµРЅРѕСЃРёРј С€Р°СЂ РІ С†РµР»РµРІСѓСЋ СЏС‡РµР№РєСѓ Рё СЃС‚Р°РІРёРј С„Р»Р°Рі moving=TRUE
             ZeroMemory(&balls[path[pathLen-1]],sizeof(TBall));
             balls[path[pathLen-1]].color=balls[i].color;
             balls[path[pathLen-1]].moving=TRUE;
@@ -847,15 +847,15 @@ void TEngine::MoveBall(WORD *path, WORD pathLen)
             break;
         }
     }
-    //запись кадров анимации перемещения
+    //Р·Р°РїРёСЃСЊ РєР°РґСЂРѕРІ Р°РЅРёРјР°С†РёРё РїРµСЂРµРјРµС‰РµРЅРёСЏ
     WORD row=selectedId / FIELD_SIZE,
          col=selectedId % FIELD_SIZE;
-    //начальное положение
+    //РЅР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ
     D3DXMatrixTranslation(&tmp,(row-HALF_FIELD_SIZE+0.5)*CELL_SIZE,BALL_R,(col-HALF_FIELD_SIZE+0.5)*CELL_SIZE);
     moveAnimation->SetFrame(0,tmp);
     for(WORD i=0;i<pathLen;i++)
     {
-        //остальные положения вычисляем, исходя из содержимого массива path
+        //РѕСЃС‚Р°Р»СЊРЅС‹Рµ РїРѕР»РѕР¶РµРЅРёСЏ РІС‹С‡РёСЃР»СЏРµРј, РёСЃС…РѕРґСЏ РёР· СЃРѕРґРµСЂР¶РёРјРѕРіРѕ РјР°СЃСЃРёРІР° path
         row=path[i] / FIELD_SIZE;
         col=path[i] % FIELD_SIZE;
         D3DXMatrixTranslation(&tmp,(row-HALF_FIELD_SIZE+0.5)*CELL_SIZE,BALL_R,(col-HALF_FIELD_SIZE+0.5)*CELL_SIZE);
@@ -869,7 +869,7 @@ void TEngine::DetonateBalls(WORD *detonateList, WORD count)
     TBallInfo *ballList=new TBallInfo[count];
     for(WORD i=0;i<count;i++)
     {
-        //освобождаем ячейки от шаров и заполняем массив ballList для инициализации системы частиц
+        //РѕСЃРІРѕР±РѕР¶РґР°РµРј СЏС‡РµР№РєРё РѕС‚ С€Р°СЂРѕРІ Рё Р·Р°РїРѕР»РЅСЏРµРј РјР°СЃСЃРёРІ ballList РґР»СЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё СЃРёСЃС‚РµРјС‹ С‡Р°СЃС‚РёС†
         ballList[i].cellId=detonateList[i];
         ballList[i].color=balls[detonateList[i]].color;
         ZeroMemory(&balls[detonateList[i]],sizeof(TBall));
@@ -881,43 +881,43 @@ void TEngine::DetonateBalls(WORD *detonateList, WORD count)
 
 BOOL TEngine::IsSelected()
 {
-    return jumpAnimation->IsActive(); //если активна анимация прыжка, значит какой-то шар выбран
+    return jumpAnimation->IsActive(); //РµСЃР»Рё Р°РєС‚РёРІРЅР° Р°РЅРёРјР°С†РёСЏ РїСЂС‹Р¶РєР°, Р·РЅР°С‡РёС‚ РєР°РєРѕР№-С‚Рѕ С€Р°СЂ РІС‹Р±СЂР°РЅ
 }
 
 BOOL TEngine::IsMoving()
 {
-    return moveAnimation->IsActive(); //если активна анимация движения, значит какой-то шар перемещается
+    return moveAnimation->IsActive(); //РµСЃР»Рё Р°РєС‚РёРІРЅР° Р°РЅРёРјР°С†РёСЏ РґРІРёР¶РµРЅРёСЏ, Р·РЅР°С‡РёС‚ РєР°РєРѕР№-С‚Рѕ С€Р°СЂ РїРµСЂРµРјРµС‰Р°РµС‚СЃСЏ
 }
 
 BOOL TEngine::IsAppearing()
 {
-    return appearAnimation->IsActive(); //если активна анимация появления, значит какой-то шар появляется
+    return appearAnimation->IsActive(); //РµСЃР»Рё Р°РєС‚РёРІРЅР° Р°РЅРёРјР°С†РёСЏ РїРѕСЏРІР»РµРЅРёСЏ, Р·РЅР°С‡РёС‚ РєР°РєРѕР№-С‚Рѕ С€Р°СЂ РїРѕСЏРІР»СЏРµС‚СЃСЏ
 }
 
 BOOL TEngine::IsDetonating()
 {
-    return psystem->IsActive(); //если активна система частиц, значит анимируется взрыв
+    return psystem->IsActive(); //РµСЃР»Рё Р°РєС‚РёРІРЅР° СЃРёСЃС‚РµРјР° С‡Р°СЃС‚РёС†, Р·РЅР°С‡РёС‚ Р°РЅРёРјРёСЂСѓРµС‚СЃСЏ РІР·СЂС‹РІ
 }
 
 WORD TEngine::OnClick(WORD x, WORD y, BOOL *IsCell)
 {
-    //преобразуем координаты клика в луч в мировом пространстве
+    //РїСЂРµРѕР±СЂР°Р·СѓРµРј РєРѕРѕСЂРґРёРЅР°С‚С‹ РєР»РёРєР° РІ Р»СѓС‡ РІ РјРёСЂРѕРІРѕРј РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРµ
     D3DXMATRIX mat;
     pDevice->GetTransform(D3DTS_PROJECTION,&mat);
     FLOAT tx=(((2.0f*x)/((float)WinRect.right-WinRect.left))-1.0f)/mat(0,0),
           ty=(((-2.0f*y)/((float)WinRect.bottom-WinRect.top))+1.0f)/mat(1,1);
     TRay ray;
-    //в пространстве вида начало и направление луча задаются так:
+    //РІ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРµ РІРёРґР° РЅР°С‡Р°Р»Рѕ Рё РЅР°РїСЂР°РІР»РµРЅРёРµ Р»СѓС‡Р° Р·Р°РґР°СЋС‚СЃСЏ С‚Р°Рє:
     ray.orig=D3DXVECTOR3(0.0f,0.0f,0.0f);
     ray.dir=D3DXVECTOR3(tx,ty,1.0f);
     pDevice->GetTransform(D3DTS_VIEW,&mat);
     D3DXMatrixInverse(&mat,0,&mat);
-    //преобразуем в мировое пространство, умножая на инвертированную видовую матрицу.
-    //Начало луча преобразуется, как точка, а направление - как нормаль!
+    //РїСЂРµРѕР±СЂР°Р·СѓРµРј РІ РјРёСЂРѕРІРѕРµ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ, СѓРјРЅРѕР¶Р°СЏ РЅР° РёРЅРІРµСЂС‚РёСЂРѕРІР°РЅРЅСѓСЋ РІРёРґРѕРІСѓСЋ РјР°С‚СЂРёС†Сѓ.
+    //РќР°С‡Р°Р»Рѕ Р»СѓС‡Р° РїСЂРµРѕР±СЂР°Р·СѓРµС‚СЃСЏ, РєР°Рє С‚РѕС‡РєР°, Р° РЅР°РїСЂР°РІР»РµРЅРёРµ - РєР°Рє РЅРѕСЂРјР°Р»СЊ!
     D3DXVec3TransformCoord(&ray.orig,&ray.orig,&mat);
     D3DXVec3TransformNormal(&ray.dir,&ray.dir,&mat);
-    //сначала пытаемся найти пересечение с любым шаром
-    //для этого нужно решить квадратное уравнение (задача пересечения луча и сферы)
+    //СЃРЅР°С‡Р°Р»Р° РїС‹С‚Р°РµРјСЃСЏ РЅР°Р№С‚Рё РїРµСЂРµСЃРµС‡РµРЅРёРµ СЃ Р»СЋР±С‹Рј С€Р°СЂРѕРј
+    //РґР»СЏ СЌС‚РѕРіРѕ РЅСѓР¶РЅРѕ СЂРµС€РёС‚СЊ РєРІР°РґСЂР°С‚РЅРѕРµ СѓСЂР°РІРЅРµРЅРёРµ (Р·Р°РґР°С‡Р° РїРµСЂРµСЃРµС‡РµРЅРёСЏ Р»СѓС‡Р° Рё СЃС„РµСЂС‹)
     D3DXVECTOR3 ballCenter,tmp;
     WORD row,col,minBallId=TOTAL_COUNT;
     FLOAT a,b,c,discrime,t,minDistance=-1;
@@ -937,8 +937,8 @@ WORD TEngine::OnClick(WORD x, WORD y, BOOL *IsCell)
         discrime=b*b-4*a*c;
         if(discrime>0)
         {
-            //есть пересечение!
-            //но их может быть несколько, поэтому оцениваем расстояние от наблюдателя до шара
+            //РµСЃС‚СЊ РїРµСЂРµСЃРµС‡РµРЅРёРµ!
+            //РЅРѕ РёС… РјРѕР¶РµС‚ Р±С‹С‚СЊ РЅРµСЃРєРѕР»СЊРєРѕ, РїРѕСЌС‚РѕРјСѓ РѕС†РµРЅРёРІР°РµРј СЂР°СЃСЃС‚РѕСЏРЅРёРµ РѕС‚ РЅР°Р±Р»СЋРґР°С‚РµР»СЏ РґРѕ С€Р°СЂР°
             b=sqrt(D3DXVec3Dot(&tmp,&tmp));
             if((minDistance==-1)||(b<minDistance))
             {
@@ -949,25 +949,25 @@ WORD TEngine::OnClick(WORD x, WORD y, BOOL *IsCell)
     }
     if(minBallId<TOTAL_COUNT)
     {
-        //выбран шар - возможно, что до этого тоже был выбран шар, поэтому
-        //снимаем выбор со всего множества
+        //РІС‹Р±СЂР°РЅ С€Р°СЂ - РІРѕР·РјРѕР¶РЅРѕ, С‡С‚Рѕ РґРѕ СЌС‚РѕРіРѕ С‚РѕР¶Рµ Р±С‹Р» РІС‹Р±СЂР°РЅ С€Р°СЂ, РїРѕСЌС‚РѕРјСѓ
+        //СЃРЅРёРјР°РµРј РІС‹Р±РѕСЂ СЃРѕ РІСЃРµРіРѕ РјРЅРѕР¶РµСЃС‚РІР°
         for(WORD i=0;i<TOTAL_COUNT;i++)
         {
             balls[i].jumping=FALSE;
         }
-        //выбираем новый шар
+        //РІС‹Р±РёСЂР°РµРј РЅРѕРІС‹Р№ С€Р°СЂ
         balls[minBallId].jumping=TRUE;
         jumpAnimation->Start();
         *IsCell=FALSE;
         return minBallId;
     }
-    //иначе, если уже что-то выбрано, пытаемся найти пересечение луча с ячейкой
+    //РёРЅР°С‡Рµ, РµСЃР»Рё СѓР¶Рµ С‡С‚Рѕ-С‚Рѕ РІС‹Р±СЂР°РЅРѕ, РїС‹С‚Р°РµРјСЃСЏ РЅР°Р№С‚Рё РїРµСЂРµСЃРµС‡РµРЅРёРµ Р»СѓС‡Р° СЃ СЏС‡РµР№РєРѕР№
     if(IsSelected())
     {
-        //intersection будет содержать координаты x и z пересечения луча с плоскостью y=0
+        //intersection Р±СѓРґРµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ РєРѕРѕСЂРґРёРЅР°С‚С‹ x Рё z РїРµСЂРµСЃРµС‡РµРЅРёСЏ Р»СѓС‡Р° СЃ РїР»РѕСЃРєРѕСЃС‚СЊСЋ y=0
         t=-ray.orig.y/ray.dir.y;
         D3DXVECTOR3 intersection=ray.orig+t*ray.dir;
-        //если x и z соответствуют какой-либо ячейке, то возвращаем ее ID
+        //РµСЃР»Рё x Рё z СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‚ РєР°РєРѕР№-Р»РёР±Рѕ СЏС‡РµР№РєРµ, С‚Рѕ РІРѕР·РІСЂР°С‰Р°РµРј РµРµ ID
         if( (intersection.x>-CELL_SIZE*HALF_FIELD_SIZE)&&(intersection.x<CELL_SIZE*HALF_FIELD_SIZE) &&
             (intersection.z>-CELL_SIZE*HALF_FIELD_SIZE)&&(intersection.z<CELL_SIZE*HALF_FIELD_SIZE))
         {
@@ -984,7 +984,7 @@ WORD TEngine::OnClick(WORD x, WORD y, BOOL *IsCell)
 void TEngine::OnRotateX(INT offset)
 {
     D3DXMATRIX mRot;
-    //вращение камеры вокруг мировой оси Y
+    //РІСЂР°С‰РµРЅРёРµ РєР°РјРµСЂС‹ РІРѕРєСЂСѓРі РјРёСЂРѕРІРѕР№ РѕСЃРё Y
     D3DXMatrixRotationY(&mRot,ROT_SPEED*offset);
     D3DXVec3TransformCoord(&CameraPos,&CameraPos,&mRot);
     UpdateView();
@@ -994,9 +994,9 @@ void TEngine::OnRotateY(INT offset)
 {
     D3DXMATRIX mRot;
     D3DXVECTOR3 vAxis,vTmp;
-    //вращение камеры вокруг оси, лежащей в плоскости Y=0
-    //и перпендекулярной направлению взгляда, - таким образом,
-    //камера всегда направлена в начало координат
+    //РІСЂР°С‰РµРЅРёРµ РєР°РјРµСЂС‹ РІРѕРєСЂСѓРі РѕСЃРё, Р»РµР¶Р°С‰РµР№ РІ РїР»РѕСЃРєРѕСЃС‚Рё Y=0
+    //Рё РїРµСЂРїРµРЅРґРµРєСѓР»СЏСЂРЅРѕР№ РЅР°РїСЂР°РІР»РµРЅРёСЋ РІР·РіР»СЏРґР°, - С‚Р°РєРёРј РѕР±СЂР°Р·РѕРј,
+    //РєР°РјРµСЂР° РІСЃРµРіРґР° РЅР°РїСЂР°РІР»РµРЅР° РІ РЅР°С‡Р°Р»Рѕ РєРѕРѕСЂРґРёРЅР°С‚
     D3DXVec3Cross(&vAxis,&CameraPos,new D3DXVECTOR3(0.0f,1.0f,0.0f));
     D3DXMatrixRotationAxis(&mRot,&vAxis,ROT_SPEED*offset);
     D3DXVec3TransformCoord(&vTmp,&CameraPos,&mRot);
@@ -1030,7 +1030,7 @@ void TEngine::OnResize()
 {
     GetWindowRect(hWindow,&WinRect);
     D3DXMATRIX mProj;
-    //обновляем матрицу проекции, чтобы не появлялось искажений пропорций
+    //РѕР±РЅРѕРІР»СЏРµРј РјР°С‚СЂРёС†Сѓ РїСЂРѕРµРєС†РёРё, С‡С‚РѕР±С‹ РЅРµ РїРѕСЏРІР»СЏР»РѕСЃСЊ РёСЃРєР°Р¶РµРЅРёР№ РїСЂРѕРїРѕСЂС†РёР№
     D3DXMatrixPerspectiveFovLH(&mProj,D3DX_PI/4,(WinRect.right-WinRect.left)/((float)WinRect.bottom-WinRect.top),1.0f,1000.0f);
     pDevice->SetTransform(D3DTS_PROJECTION,&mProj);
 }
@@ -1042,10 +1042,10 @@ void TEngine::OnUpdateScore(LONG score)
 
 void TEngine::Render()
 {
-    //вычисляем, сколько миллисекунд прошло с момента отрисовки предыдущего кадра
+    //РІС‹С‡РёСЃР»СЏРµРј, СЃРєРѕР»СЊРєРѕ РјРёР»Р»РёСЃРµРєСѓРЅРґ РїСЂРѕС€Р»Рѕ СЃ РјРѕРјРµРЅС‚Р° РѕС‚СЂРёСЃРѕРІРєРё РїСЂРµРґС‹РґСѓС‰РµРіРѕ РєР°РґСЂР°
     clock_t elapsed=clock(), deltaTime=elapsed-currentTime;
     currentTime=elapsed;
-    //обновляем позиции анимаций, если они активны
+    //РѕР±РЅРѕРІР»СЏРµРј РїРѕР·РёС†РёРё Р°РЅРёРјР°С†РёР№, РµСЃР»Рё РѕРЅРё Р°РєС‚РёРІРЅС‹
     if(jumpAnimation->IsActive())
     {
         jumpAnimation->UpdatePosition(deltaTime);
@@ -1060,11 +1060,11 @@ void TEngine::Render()
     }
     pDevice->Clear(0,NULL,D3DCLEAR_STENCIL|D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER,D3DCOLOR_XRGB(0,0,0),1.0f,0);
     pDevice->BeginScene();
-    //рисуем платформу
+    //СЂРёСЃСѓРµРј РїР»Р°С‚С„РѕСЂРјСѓ
     DrawPlatform();
-    //рисуем шары
+    //СЂРёСЃСѓРµРј С€Р°СЂС‹
     DrawBalls();
-    //если активна система частиц, то обновляем положения частиц и рендерим их с текстурой
+    //РµСЃР»Рё Р°РєС‚РёРІРЅР° СЃРёСЃС‚РµРјР° С‡Р°СЃС‚РёС†, С‚Рѕ РѕР±РЅРѕРІР»СЏРµРј РїРѕР»РѕР¶РµРЅРёСЏ С‡Р°СЃС‚РёС† Рё СЂРµРЅРґРµСЂРёРј РёС… СЃ С‚РµРєСЃС‚СѓСЂРѕР№
     if(psystem->IsActive())
     {
         pDevice->SetTexture(0,pTex);
@@ -1072,7 +1072,7 @@ void TEngine::Render()
         psystem->Render();
         pDevice->SetTexture(0,0);
     }
-    //вывод заработанных очков
+    //РІС‹РІРѕРґ Р·Р°СЂР°Р±РѕС‚Р°РЅРЅС‹С… РѕС‡РєРѕРІ
     char buf[255]="Score: ",tmp[255];
     itoa(score,tmp,10);
     strcat(buf,tmp);

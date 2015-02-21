@@ -2,7 +2,6 @@
 #ifndef _ENGINE_H_
 #define _ENGINE_H_
 
-#include "game.h"
 #include <d3dx9.h>
 #include <time.h>
 
@@ -28,6 +27,23 @@
 
 void Terminate(LPCSTR msg);
 DWORD Float2Dword(FLOAT val);
+
+struct TBallInfo
+{
+    WORD cellId;
+    D3DCOLORVALUE color;
+};
+
+D3DCOLORVALUE GetColorByIndex(WORD idx);
+
+struct TCell
+{
+    BOOL free;
+    BOOL isNew;
+    BOOL selected;
+    BOOL detonating;
+    WORD colorIndex;
+};
 
 struct TVertex {
     FLOAT x,y,z;

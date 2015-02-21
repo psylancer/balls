@@ -1,5 +1,7 @@
 ﻿
 #include "app.h"
+#include "engine.h"
+#include "game.h"
 #include <tchar.h>
 
 #define WINDOW_CLASSNAME _T("BallsApp")

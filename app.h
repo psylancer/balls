@@ -2,8 +2,10 @@
 #ifndef _APP_H_
 #define _APP_H_
 
-#include "engine.h"
 #include <windows.h>
+
+class TEngine;
+class TGame;
 
 class TApplication {
 private:

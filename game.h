@@ -1,4 +1,8 @@
-#include "d3d9.h"
+
+#ifndef _GAME_H_
+#define _GAME_H_
+
+#include <windows.h>
 
 #define FIELD_SIZE 8
 #define HALF_FIELD_SIZE FIELD_SIZE/2
@@ -8,22 +12,8 @@
 #define APPEAR_COUNT 3
 #define DETONATE_COUNT 5
 
-D3DCOLORVALUE GetColorByIndex(WORD idx);
-
-struct TCell
-{
-    BOOL free;
-    BOOL isNew;
-    BOOL selected;
-    BOOL detonating;
-    WORD colorIndex;
-};
-
-struct TBallInfo
-{
-    WORD cellId;
-    D3DCOLORVALUE color;
-};
+struct TCell;
+struct TBallInfo;
 
 class TGame {
 private:
@@ -50,3 +40,5 @@ public:
     LONG GetScore();
     BOOL IsGameOver();
 };
+
+#endif

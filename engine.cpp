@@ -1,6 +1,28 @@
-﻿#include "engine.h"
+﻿
+#include "engine.h"
+#include "game.h"
+#include <tchar.h>
+
 #define __DIE__(msg) MessageBox(NULL,msg,_T("Error"),0); \
                        PostQuitMessage(0);
+
+D3DCOLORVALUE GetColorByIndex(WORD idx)
+{
+    //по индексу можно получить значение цвета для Direct3D
+    D3DCOLORVALUE mat;
+    ZeroMemory(&mat,sizeof(D3DCOLORVALUE));
+    mat.a=1.0f;
+    switch(idx)
+    {
+        case 0: { mat.r=1.0f; mat.g=0.0f; mat.b=0.0f; break; }
+        case 1: { mat.r=0.0f; mat.g=1.0f; mat.b=0.0f; break; }
+        case 2: { mat.r=0.0f; mat.g=0.0f; mat.b=1.0f; break; }
+        case 3: { mat.r=1.0f; mat.g=0.0f; mat.b=1.0f; break; }
+        case 4: { mat.r=1.0f; mat.g=1.0f; mat.b=0.0f; break; }
+        case 5: { mat.r=0.0f; mat.g=1.0f; mat.b=1.0f; break; }
+    }
+    return mat;
+}
 
 DWORD Float2Dword(FLOAT val)
 {
@@ -511,7 +533,7 @@ void TEngine::InitGeometry()
     TAtom *atom=cellGeometry->GetAtom(0);
     atom->Init(20,30,10,D3DPT_TRIANGLELIST);
     TVertex *vertices;
-    FLOAT tmp=1/sqrt(2);
+    FLOAT tmp=1/sqrt(2.0);
     vertices=new TVertex[20];
     ZeroMemory(vertices,20*sizeof(TVertex));
     vertices[0].x=0.0f; vertices[0].y=-CELL_BIAS; vertices[0].z=0.0f;

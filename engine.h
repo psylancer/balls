@@ -1,8 +1,9 @@
-#include "d3d9.h"
-#include "d3dx9.h"
-#include "tchar.h"
-#include "time.h"
-#include "game.h"
+
+#ifndef _ENGINE_H_
+#define _ENGINE_H_
+
+#include <d3dx9.h>
+#include <time.h>
 
 #define CELL_SIZE 25.0f
 #define CELL_BIAS 2.0f
@@ -26,6 +27,23 @@
 
 void Terminate(LPCSTR msg);
 DWORD Float2Dword(FLOAT val);
+
+struct TBallInfo
+{
+    WORD cellId;
+    D3DCOLORVALUE color;
+};
+
+D3DCOLORVALUE GetColorByIndex(WORD idx);
+
+struct TCell
+{
+    BOOL free;
+    BOOL isNew;
+    BOOL selected;
+    BOOL detonating;
+    WORD colorIndex;
+};
 
 struct TVertex {
     FLOAT x,y,z;
@@ -176,3 +194,5 @@ public:
     void OnUpdateScore(LONG score);
     void Render();
 };
+
+#endif
